@@ -1,0 +1,2 @@
+### Hexlet tests and linter status:
+[![Actions Status](https://github.com/dvt1987/moscow-data-analyst-project-92/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/dvt1987/moscow-data-analyst-project-92/actions)
