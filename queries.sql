@@ -63,46 +63,27 @@ ORDER BY
 -- ------------------------------------------------------------------------------------------------------------------------------------------
 -- Задание 5.3: Выручка по дням недели
 -- ------------------------------------------------------------------------------------------------------------------------------------------
---Задаем CTE, чтобы получить таблицу со всеми возможными комбинациями дня недели и продавца. Нужно для получения строк для продавцов, у которых в определенные дни недели могло вообще не быть продаж. Все равно хотим их видеть, но с продажами = 0.
-WITH dim_tab AS (
-    SELECT DISTINCT
-        TO_CHAR(s.sale_date, 'day') AS day_of_week,
-        TO_CHAR(s.sale_date, 'ID') AS day_of_week_int,
-        CONCAT(e.first_name, ' ', e.last_name) AS seller
-    FROM
-        sales AS s
-    CROSS JOIN employees AS e
-),
-
-b AS (
+SELECT
+    day_of_week,
+    seller,
+    income
+FROM (
     SELECT
+        TRIM(TO_CHAR(s.sale_date, 'day')) AS day_of_week,
         CONCAT(e.first_name, ' ', e.last_name) AS seller,
-        TO_CHAR(s.sale_date, 'day') AS day_of_week,
+        TO_CHAR(s.sale_date, 'ID') AS sort_d,
         FLOOR(SUM(s.quantity * p.price)) AS income
     FROM
-        employees AS e
-    LEFT JOIN
         sales AS s
-        ON e.employee_id = s.sales_person_id
+    LEFT JOIN
+        employees AS e
+        ON s.sales_person_id = e.employee_id
     LEFT JOIN
         products AS p
         ON s.product_id = p.product_id
-    GROUP BY
-        e.employee_id,
-        day_of_week
-)
-
-SELECT
-    TRIM(a.day_of_week) AS day_of_week,
-    a.seller,
-    COALESCE(b.income, 0.0) AS income
-FROM
-    dim_tab AS a
-LEFT JOIN b
-    ON a.seller = b.seller AND a.day_of_week = b.day_of_week
-ORDER BY
-    a.day_of_week_int,
-    a.seller;
+    GROUP BY 1, 2, 3
+) AS a
+ORDER BY sort_d, seller;
 
 -- ------------------------------------------------------------------------------------------------------------------------------------------
 -- Задание 6.1: Количество покупателей в разных возрастных группах: 16-25, 26-40 и 40+
@@ -185,4 +166,5 @@ WHERE
     )
 ORDER BY
     s.customer_id;
+
 
