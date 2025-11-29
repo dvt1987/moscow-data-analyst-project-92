@@ -1,4 +1,4 @@
-"day_of_week,""income"",""seller"""
+"day_of_week","income","seller"
 monday,231845241,Abraham Bennet
 monday,392378037,Albert Ringer
 monday,39656842,Ann Dull
@@ -153,3 +153,4 @@ sunday,80496472,Reginald Blotchet-Halls
 sunday,148514539,Sheryl Hunter
 sunday,27431434,Stearns MacFeather
 sunday,95337213,Sylvia Panteley
+
