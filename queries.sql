@@ -93,7 +93,7 @@ b AS (
 )
 
 SELECT
-    a.day_of_week,
+    TRIM(a.day_of_week) AS day_of_week,
     a.seller,
     COALESCE(b.income, 0.0) AS income
 FROM
@@ -185,3 +185,4 @@ WHERE
     )
 ORDER BY
     s.customer_id;
+
