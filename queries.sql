@@ -65,8 +65,8 @@ ORDER BY
 -- ------------------------------------------------------------------------------------------------------------------------------------------
 SELECT
     day_of_week,
-    seller,
-    income
+    income,
+    seller
 FROM (
     SELECT
         TRIM(TO_CHAR(s.sale_date, 'day')) AS day_of_week,
@@ -166,5 +166,6 @@ WHERE
     )
 ORDER BY
     s.customer_id;
+
 
 
