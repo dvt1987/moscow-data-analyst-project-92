@@ -24,7 +24,8 @@ ORDER BY
     income DESC
 LIMIT 10;
 
---Задание 5.2: Продавцы, чья средняя выручка за сделку меньше средней по всем продавцам. Отсортировано по выручке по возрастанию
+--Задание 5.2: Продавцы, чья средняя выручка за сделку меньше средней 
+--по всем продавцам. Отсортировано по выручке по возрастанию
 SELECT
     CONCAT(e.first_name, ' ', e.last_name) AS seller,
     FLOOR(AVG(s.quantity * p.price)) AS average_income
@@ -72,11 +73,15 @@ FROM (
     LEFT JOIN
         products AS p
         ON s.product_id = p.product_id
-    GROUP BY TRIM(TO_CHAR(s.sale_date, 'day')), CONCAT(e.first_name, ' ', e.last_name), TO_CHAR(s.sale_date, 'ID')
+    GROUP BY 
+        TRIM(TO_CHAR(s.sale_date, 'day')), 
+        CONCAT(e.first_name, ' ', e.last_name), 
+        TO_CHAR(s.sale_date, 'ID')
 ) AS a
 ORDER BY sort_d, seller;
 
---Задание 6.1: Количество покупателей в разных возрастных группах: 16-25, 26-40 и 40+
+--Задание 6.1: Количество покупателей в разных 
+--возрастных группах: 16-25, 26-40 и 40+
 SELECT
     CASE
         WHEN age BETWEEN 16 AND 25
@@ -95,7 +100,8 @@ GROUP BY
 ORDER BY
     age_category;
 
---Задание 6.2: Данные по количеству уникальных покупателей и выручке, которую они принесли за каждый месяц
+--Задание 6.2: Данные по количеству уникальных покупателей 
+--и выручке, которую они принесли за каждый месяц
 SELECT
     TO_CHAR(s.sale_date, 'YYYY-MM') AS selling_month,
     COUNT(DISTINCT s.customer_id) AS total_customers,
@@ -110,16 +116,17 @@ GROUP BY
 ORDER BY
     selling_month;
 
---Задание 6.3: Отчет о покупателях, первая покупка которых была в ходе проведения акций
+--Задание 6.3: Отчет о покупателях, первая покупка 
+--которых была в ходе проведения акций
 SELECT
     s.sale_date,
     CONCAT(c.first_name, ' ', c.last_name) AS customer,
     CONCAT(e.first_name, ' ', e.last_name) AS seller
 FROM (
     SELECT DISTINCT ON (s.customer_id)
-        s.customer_id AS customer_id,
-        s.sale_date AS sale_date,
-        s.sales_person_id AS sales_person_id
+        s.customer_id,
+        s.sale_date,
+        s.sales_person_id
     FROM
         sales AS s
     INNER JOIN
@@ -136,7 +143,8 @@ LEFT JOIN
 LEFT JOIN
     employees AS e
     ON s.sales_person_id = e.employee_id
-WHERE s.sale_date
+WHERE 
+    s.sale_date
     = (
         SELECT MIN(s2.sale_date)
         FROM
@@ -145,3 +153,4 @@ WHERE s.sale_date
     )
 ORDER BY
     s.customer_id;
+
