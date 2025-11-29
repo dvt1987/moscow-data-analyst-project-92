@@ -73,9 +73,9 @@ FROM (
     LEFT JOIN
         products AS p
         ON s.product_id = p.product_id
-    GROUP BY 
-        TRIM(TO_CHAR(s.sale_date, 'day')), 
-        CONCAT(e.first_name, ' ', e.last_name), 
+    GROUP BY
+        TRIM(TO_CHAR(s.sale_date, 'day')),
+        CONCAT(e.first_name, ' ', e.last_name),
         TO_CHAR(s.sale_date, 'ID')
 ) AS a
 ORDER BY sort_d, seller;
@@ -143,7 +143,7 @@ LEFT JOIN
 LEFT JOIN
     employees AS e
     ON s.sales_person_id = e.employee_id
-WHERE 
+WHERE
     s.sale_date
     = (
         SELECT MIN(s2.sale_date)
@@ -153,4 +153,3 @@ WHERE
     )
 ORDER BY
     s.customer_id;
-
