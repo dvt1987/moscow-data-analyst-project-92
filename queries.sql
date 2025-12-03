@@ -131,8 +131,3 @@ INNER JOIN employees AS e
     ON s.sales_person_id = e.employee_id
 WHERE p.price = 0
 ORDER BY s.customer_id, s.sale_date;
-
-    )
-ORDER BY
-    s.customer_id;
-
